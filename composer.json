@@ -1,5 +1,14 @@
 {
-    "require": {
-        "bref/bref": "^0.5.31"
+  "require": {
+    "bref/bref": "^0.5.31",
+    "aws/aws-sdk-php": "*",
+    "ext-json": "*",
+    "vlucas/phpdotenv": "^5.2",
+    "phpmailer/phpmailer": "^6.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": "app/"
     }
+  }
 }
