@@ -9,11 +9,22 @@ plugins:
     - ./vendor/bref/bref
 
 functions:
-    hello:
-        handler: index.php
+    process-photo:
+        handler: processPhoto.php
         description: ''
         layers:
             - ${bref:layer.php-74}
+    save-labels:
+        handler: saveLabels.php
+        description: ''
+        layers:
+            - ${bref:layer.php-74}
+    notify-absence:
+        handler: notifyAbsence.php
+        description: ''
+        layers:
+            - ${bref:layer.php-74}
+
 
 # Exclude files from deployment
 package:

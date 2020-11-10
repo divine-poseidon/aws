@@ -6,30 +6,22 @@ namespace app;
 
 class UploadedPhoto
 {
-    public string $bucketName;
     public string $photoName;
+    public string $bucketName;
 
-    public function __construct(string $imageName, string $bucketName)
+    public function __construct(string $photoName, string $bucketName)
     {
-        $this->photoName = $imageName;
+        $this->photoName = $photoName;
         $this->bucketName = $bucketName;
     }
 
-    /**
-     * @param array $event
-     * @return UploadedPhoto[]
-     */
-    public static function createObjectsFromEvent(array $event): array
+    public static function createFromEvent(array $event): UploadedPhoto
     {
-        $result = [];
+        $eventRecords = reset($event['Records']);
+        $s3Object = $eventRecords['s3'];
+        $imageName = $s3Object['object']['key'];
+        $bucketName = $s3Object['bucket']['name'];
 
-        foreach ($event['Records'] as $recordIndex => $recordData) {
-            $s3Object = $event['Records'][$recordIndex]['s3'];
-            $imageName = $s3Object['object']['key'];
-            $bucketName = $s3Object['bucket']['name'];
-            $result[] = new UploadedPhoto($imageName, $bucketName);
-        }
-
-        return $result;
+        return new UploadedPhoto($imageName, $bucketName);
     }
 }
