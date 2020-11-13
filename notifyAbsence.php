@@ -1,5 +1,6 @@
 <?php
 
+use app\AwsServicesConfig;
 use app\notifier\clients\PhpMailerClient;
 use app\notifier\clients\SesClient;
 use app\notifier\notifications\DogIsAbsentEmailNotification;
@@ -24,17 +25,15 @@ return static function (array $params) {
         ]]);
 
 
-    $sesClient = new SesClient([
-        'version' => 'latest',
-        'region' => 'us-east-1',
-        'credentials' => new Credentials(getenv('AWS_KEY'), getenv('AWS_SECRET')),
-        'emailParams' =>
+    $sesClient = new SesClient(array_merge(AwsServicesConfig::getServicesParams(),
             [
-                'RawMessage' => [
-                    'Data' => $phpMailer->getMimeMessage()
-                ],
-            ]
-    ]);
+                'emailParams' => [
+                    'RawMessage' => [
+                        'Data' => $phpMailer->getMimeMessage()
+                    ],
+                ]
+            ])
+    );
     $sesClient->sendRawEmail($sesClient->emailParams);
     unlink($s3Photo['filePath']);
 };
