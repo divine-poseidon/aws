@@ -4,6 +4,7 @@
 namespace app\storage;
 
 
+use app\AwsServicesConfig;
 use app\UploadedPhoto;
 use Aws\Credentials\Credentials;
 use Aws\Result;
@@ -15,12 +16,7 @@ class S3Storage implements StorageInterface
 
     public function __construct()
     {
-        $this->client = new S3Client(
-            [
-                'version' => 'latest',
-                'credentials' => new Credentials(getenv('AWS_KEY'), getenv('AWS_SECRET')),
-                'region' => 'us-east-1'
-            ]);
+        $this->client = new S3Client(AwsServicesConfig::getServicesParams());
     }
 
     public function add(array $data): void
@@ -28,7 +24,7 @@ class S3Storage implements StorageInterface
         $this->client->putObject($data);
     }
 
-    public function get(array $params)
+    public function get(array $params): Result
     {
         return $this->client->getObject($params);
     }

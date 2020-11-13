@@ -4,8 +4,10 @@
 namespace app\storage;
 
 
+use app\AwsServicesConfig;
 use Aws\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\Result;
 
 class DynamoDbStorage implements StorageInterface
 {
@@ -13,13 +15,7 @@ class DynamoDbStorage implements StorageInterface
 
     public function __construct()
     {
-        $this->client = new DynamoDbClient(
-            [
-                'credentials' => new Credentials(getenv('AWS_KEY'), getenv('AWS_SECRET')),
-                'version' => 'latest',
-                'region' => 'us-east-1'
-            ]
-        );
+        $this->client = new DynamoDbClient(AwsServicesConfig::getServicesParams());
     }
 
     public function add(array $data): void
@@ -27,7 +23,7 @@ class DynamoDbStorage implements StorageInterface
         $this->client->putItem($data);
     }
 
-    public function get(array $params)
+    public function get(array $params): Result
     {
         return $this->client->getItem($params);
     }

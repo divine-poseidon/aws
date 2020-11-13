@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\notifier;
+namespace app\notifier\notifications;
 
 
 use app\notifier\interfaces\EmailNotificationInterface;

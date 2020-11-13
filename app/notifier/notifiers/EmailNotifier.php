@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\notifier;
+namespace app\notifier\notifiers;
 
 
 use app\notifier\interfaces\ClientInterface;

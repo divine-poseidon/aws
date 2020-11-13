@@ -2,7 +2,7 @@
 
 use app\notifier\clients\PhpMailerClient;
 use app\notifier\clients\SesClient;
-use app\notifier\DogIsAbsentEmailNotification;
+use app\notifier\notifications\DogIsAbsentEmailNotification;
 use app\notifier\recipients\Tester;
 use app\storage\S3Storage;
 use app\UploadedPhoto;

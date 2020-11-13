@@ -1,5 +1,4 @@
 <?php
-use app\PhotoProcessor;
 use app\Rekognition;
 use app\UploadedPhoto;
 
@@ -10,7 +9,7 @@ return static function (array $event) {
     $uploadedPhotoLabels = (new Rekognition())->detectLabelsFromUploadedPhoto($uploadedPhoto);
 
     return [
-        'present' => PhotoProcessor::checkIfDogIsPresent($uploadedPhotoLabels),
+        'present' => Rekognition::checkIfDogIsPresentOnPhoto($uploadedPhotoLabels),
         'uploadedPhoto' => $uploadedPhoto,
         'labels' => $uploadedPhotoLabels
     ];
